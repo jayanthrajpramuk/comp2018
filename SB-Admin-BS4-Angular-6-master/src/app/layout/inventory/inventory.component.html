@@ -1,81 +1,95 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Inventory'" [icon]="'fa-linode'"></app-page-header>
-   <!-- <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Bar Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Update</button>
-                </div>
-            </div>
+
+        <br>
+
+    <div class="row">
+        <div class="col-2 form-group"><select class="form-control" id="assembly">
+                <option>Assembly</option>
+                <option>ASL-1</option>
+                <option>ASL-2</option>
+                <option>ASL-3</option>
+
+              </select></div>
+        <div class="col-2 form-group"><select class="form-control" id="zone">
+                <option>Zone</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+              </select></div>
+
+        <div class="col-5">
+            <input type="text" name="search" placeholder="Search anything" class="form-control">
         </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Doughnut Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="180px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
+        <div class="col-2">
+            <button id="search" name="search" class="btn btn-primary">Search</button>
         </div>
     </div>
-    <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Radar Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="150px" [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Pie Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="150px" [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Polar Area Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="130px" [data]="polarAreaChartData" [labels]="polarAreaChartLabels" [legend]="polarAreaLegend" [chartType]="polarAreaChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Line Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-    </div>-->
+
+        <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource" matSort
+                   (matSortChange)="onSortChange($event)">
+
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+
+            <mat-header-cell *matHeaderCellDef>
+              <mat-checkbox color="primary"
+                            (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </mat-header-cell>
 
 
-    Inventory WORKS !!
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox color="primary"
+                            (click)="$event.stopPropagation();"
+                            (change)="$event ? selection.toggle(row) : null; getSelected()"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+            <mat-cell *matCellDef="let row"><a [routerLink]="['../details',row.id]">{{row.id}}</a></mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="progress">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>progress</mat-header-cell>
+            <mat-cell class="description-cell"
+                      *matCellDef="let row">{{row.progress}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="color">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>color</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let row">{{row.color}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>name</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let row">{{row.name}}
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+          <mat-row *matRowDef="let row; columns: displayedColumns"
+                   (click)="onRowClicked(row)">
+          </mat-row>
+
+
+        </mat-table>
+
+       <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                       (page)="onPageableChange($event)"></mat-paginator>-->
+      <!--</mat-card-content>-->
+    <!--</mat-card>-->
+
 </div>

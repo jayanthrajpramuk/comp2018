@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import {MatPaginator, MatSort, MatTable, MatTableDataSource} from '@angular/material';
+import {SelectionModel } from '@angular/cdk/collections';
 
 @Component({
     selector: 'app-charts',
@@ -8,157 +10,125 @@ import { routerTransition } from '../../router.animations';
     animations: [routerTransition()]
 })
 export class InventoryComponent implements OnInit {
-    // bar chart
-    public barChartOptions: any = {
-        scaleShowVerticalLines: false,
-        responsive: true
-    };
-    public barChartLabels: string[] = [
-        '2006',
-        '2007',
-        '2008',
-        '2009',
-        '2010',
-        '2011',
-        '2012'
-    ];
-    public barChartType: string = 'bar';
-    public barChartLegend: boolean = true;
+    public moduleName = 'Job Profile Module';
+     public searchString;
+     public checked;
 
-    public barChartData: any[] = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+     @ViewChild(MatTable) table: MatTable<any>;
+     displayedColumns = [/*'select', */'id', 'name', 'progress', 'color'];
+     dataSource: MatTableDataSource<UserData>;
+
+     @ViewChild(MatPaginator) paginator: MatPaginator;
+     @ViewChild(MatSort) sort: MatSort;
+     selection = new SelectionModel(true, []);
+
+    foods: Food[] = [
+      {value: 'steak-0', viewValue: 'Steak'},
+      {value: 'pizza-1', viewValue: 'Pizza'},
+      {value: 'tacos-2', viewValue: 'Tacos'}
     ];
 
-    // Doughnut
-    public doughnutChartLabels: string[] = [
-        'Download Sales',
-        'In-Store Sales',
-        'Mail-Order Sales'
-    ];
-    public doughnutChartData: number[] = [350, 450, 100];
-    public doughnutChartType: string = 'doughnut';
+     /** Whether the number of selected elements matches the total number of rows. */
+     isAllSelected() {
+       const numSelected = this.selection.selected.length;
+       const numRows = this.dataSource.data.length;
+       return numSelected === numRows;
+     }
 
-    // Radar
-    public radarChartLabels: string[] = [
-        'Eating',
-        'Drinking',
-        'Sleeping',
-        'Designing',
-        'Coding',
-        'Cycling',
-        'Running'
-    ];
-    public radarChartData: any = [
-        { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A' },
-        { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B' }
-    ];
-    public radarChartType: string = 'radar';
+     getSelected() {
+       console.log(this.selection);
+     }
 
-    // Pie
-    public pieChartLabels: string[] = [
-        'Download Sales',
-        'In-Store Sales',
-        'Mail Sales'
-    ];
-    public pieChartData: number[] = [300, 500, 100];
-    public pieChartType: string = 'pie';
+     /** Selects all rows if they are not all selected; otherwise clear selection. */
+     masterToggle() {
+       console.log(this.selection);
+       this.isAllSelected() ?
+         this.selection.clear() :
+         this.dataSource.data.forEach(row => this.selection.select(row));
+       console.log(this.selection);
 
-    // PolarArea
-    public polarAreaChartLabels: string[] = [
-        'Download Sales',
-        'In-Store Sales',
-        'Mail Sales',
-        'Telesales',
-        'Corporate Sales'
-    ];
-    public polarAreaChartData: number[] = [300, 500, 100, 40, 120];
-    public polarAreaLegend: boolean = true;
+     }
 
-    public polarAreaChartType: string = 'polarArea';
+     onRowClicked(row) {
+       console.log('Row clicked: ', row);
+     }
 
-    // lineChart
-    public lineChartData: Array<any> = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-        { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
-    ];
-    public lineChartLabels: Array<any> = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July'
-    ];
-    public lineChartOptions: any = {
-        responsive: true
-    };
-    public lineChartColors: Array<any> = [
-        {
-            // grey
-            backgroundColor: 'rgba(148,159,177,0.2)',
-            borderColor: 'rgba(148,159,177,1)',
-            pointBackgroundColor: 'rgba(148,159,177,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-        },
-        {
-            // dark grey
-            backgroundColor: 'rgba(77,83,96,0.2)',
-            borderColor: 'rgba(77,83,96,1)',
-            pointBackgroundColor: 'rgba(77,83,96,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(77,83,96,1)'
-        },
-        {
-            // grey
-            backgroundColor: 'rgba(148,159,177,0.2)',
-            borderColor: 'rgba(148,159,177,1)',
-            pointBackgroundColor: 'rgba(148,159,177,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-        }
-    ];
-    public lineChartLegend: boolean = true;
-    public lineChartType: string = 'line';
+     onPageableChange(val) {
+       console.log(val);
+     }
 
-    // events
-    public chartClicked(e: any): void {
-        // console.log(e);
-    }
+     constructor() {
+       // Create 100 users
+       const users: UserData[] = [];
+       for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
 
-    public chartHovered(e: any): void {
-        // console.log(e);
-    }
+       // Assign the data to the data source for the table to render
+       this.dataSource = new MatTableDataSource(users);
+     }
 
-    public randomize(): void {
-        // Only Change 3 values
-        const data = [
-            Math.round(Math.random() * 100),
-            59,
-            80,
-            Math.random() * 100,
-            56,
-            Math.random() * 100,
-            40
-        ];
-        const clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
-        /**
-         * (My guess), for Angular to recognize the change in the dataset
-         * it has to change the dataset variable directly,
-         * so one way around it, is to clone the data, change it and then
-         * assign it;
-         */
-    }
+     dataSourceArray2() {
+       return [{id: '18' , name: 'Jayanth' , progress: '99%' , address: 'uttarahalli' , color: 'blue'},
+         {id: '27' , name: 'IronMan' , progress: '97%' , address: 'BIPS' , color: 'Maroon'}];
+     }
 
-    constructor() {}
+     ngOnInit() {
+       this.dataSource.paginator = this.paginator;
+       this.dataSource.sort = this.sort;
+       /*
+       Below code is used to search particular column data from table
+        */
+       /*this.dataSource.filterPredicate = (data: UserData, filter: string) => data.name.indexOf(filter) != -1;*/
+     }
 
-    ngOnInit() {}
+     applyFilter(filterValue: string) {
+       filterValue = filterValue.trim(); // Remove whitespace
+       filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+       this.dataSource.filter = filterValue;
+     }
+
+     onSearch(filterValue) {
+       alert(filterValue.value + ' really ??? Please wait , still functinality not implemented !');
+       console.log(filterValue);
+       console.log(this.searchString);
+     }
+
+     // todo: use observables to moniter changes in dtasource , listen to the events and then rerender
+     // check mosh cart example
+     onSortChange(obj) {
+       console.log(obj);
+       this.dataSource.data = this.dataSourceArray2();
+       this.table.renderRows();
+     }
 }
+function createNewUser(id: number): UserData {
+  const name =
+    NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
+    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+
+  return {
+    id: id.toString(),
+    name: name,
+    progress: Math.round(Math.random() * 100).toString(),
+    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
+  };
+}
+
+/** Constants used to fill up our data base. */
+const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
+  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
+const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
+  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
+  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
+
+export interface UserData {
+  id: string;
+  name: string;
+  progress: string;
+  color: string;
+}
+
+export interface Food {
+  value: string;
+  viewValue: string;
+}
+
