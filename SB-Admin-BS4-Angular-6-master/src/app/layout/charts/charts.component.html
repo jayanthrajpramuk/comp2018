@@ -1,78 +1,35 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Charts'" [icon]="'fa-bar-chart-o'"></app-page-header>
+    <app-page-header [heading]="'Dashboard'" [icon]="'fa-bar-chart-o'"></app-page-header>
     <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Bar Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info btn-sm" (click)="randomize()">Update</button>
-                </div>
-            </div>
+        <div class="col-2 form-group"><select class="form-control" id="assembly">
+            <option>Assembly</option>
+            <option>ASL-1</option>
+            <option>ASL-2</option>
+            <option>ASL-3</option>
+
+        </select></div>
+        <div class="col-2">
+            <input type="text" name="search" placeholder="Search anything" class="form-control">
         </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Doughnut Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="180px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
+        <div class="col-2">
+            <button id="search" name="search" class="btn btn-primary">Search</button>
         </div>
     </div>
     <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Radar Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="150px" [datasets]="radarChartData" [labels]="radarChartLabels" [chartType]="radarChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
+        <div class="col-xl-3 col-lg-3">
+            <app-stat [bgClass]="'success'" [icon]="'fa fa-check'" [count]="124" [data] = "'A'"
+                      [label]="'Returned'"></app-stat>
         </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Pie Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="150px" [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Polar Area Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="130px" [data]="polarAreaChartData" [labels]="polarAreaChartLabels" [legend]="polarAreaLegend" [chartType]="polarAreaChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col col-sm-6">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Line Chart
-                </div>
-                <div class="card-body">
-                    <canvas baseChart height="130" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-                    </canvas>
-                </div>
-            </div>
+        <div class="col-xl-3 col-lg-3">
+                  <app-stat [bgClass]="'success'" [icon]="'fa fa-check'" [count]="14" [data] = "'B'"
+                            [label]="'Returned'"></app-stat>
+              </div>
+        <div class="col-xl-3 col-lg-3">
+                  <app-stat [bgClass]="'success'" [icon]="'fa fa-check'" [count]="42" [data] = "'C'"
+                            [label]="'Returned'"></app-stat>
+              </div>
+        <div class="col-xl-3 col-lg-3">
+            <app-stat [bgClass]="'danger'" [icon]="'fa-exclamation-circle'" [count]="13" [label]="'Not Returned!'" [data] = "'D'"></app-stat>
         </div>
     </div>
 </div>

@@ -10,12 +10,12 @@ import {SelectionModel } from '@angular/cdk/collections';
     animations: [routerTransition()]
 })
 export class InventoryComponent implements OnInit {
-    public moduleName = 'Job Profile Module';
+    public moduleName = 'Inventory';
      public searchString;
      public checked;
 
      @ViewChild(MatTable) table: MatTable<any>;
-     displayedColumns = [/*'select', */'id', 'name', 'progress', 'color'];
+     displayedColumns = [/*'select', 'id',*/ 'name', 'progress', 'color'];
      dataSource: MatTableDataSource<UserData>;
 
      @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -60,7 +60,7 @@ export class InventoryComponent implements OnInit {
      constructor() {
        // Create 100 users
        const users: UserData[] = [];
-       for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
+       for (let i = 1; i <= 25; i++) { users.push(createNewUser(i)); }
 
        // Assign the data to the data source for the table to render
        this.dataSource = new MatTableDataSource(users);
