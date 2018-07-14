@@ -127,18 +127,24 @@
 
 
 <mat-form-field>
-<mat-select placeholder="Print For" [(ngModel)]="selectedPrintChoiceValue" name="PrintChoice" id="ddlPrintForValue">
+<mat-select placeholder="Print For" [(ngModel)]="selectedPrintChoiceValue" name="PrintChoice" id="ddlPrintForValue" >
 <mat-option *ngFor="let printchoice of printChoice" [value]="printchoice.value">
 {{printchoice.viewValue}}
 </mat-option>
 </mat-select>
 </mat-form-field> 
 
-<mat-form-field class="example-full-width" style="margin-left : 30px">
-    <input matInput placeholder="Give Id" value="" id="txtPrintChoiceId">
+<!--<mat-form-field class="example-full-width" style="margin-left : 30px">
+    <input matInput placeholder="Give Id"  id="txtPrintChoiceId" name="txtPrintChoiceId" [(ngModel)] = "txtPrintChoiceId">
   </mat-form-field>
-   <button id="btnPrint" style="margin-left : 30px" name="Save" class="btn btn-primary">Print</button>
-  
+   <button id="btnPrint" (click)="btnPrintFunction($event)" style="margin-left : 30px" name="Save" class="btn btn-primary">Print</button>
+</mat-form-field>
+--> 
+<mat-form-field style="margin-left: 30px">
+<input matInput placeholder="Give Id" name="barcodeName" id="barcodeName" [(ngModel)]="barcodeName" (ngModelChange) = textChanged($event)>
+</mat-form-field> 
+<ngx-barcode [bc-value]="barcodeVal" [bc-display-value]="canShow"></ngx-barcode>  
+
   </mat-expansion-panel>  
 
 </mat-accordion>

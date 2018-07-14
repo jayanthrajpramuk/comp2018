@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { MaterialModule } from './shared/material.module';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
@@ -26,6 +27,7 @@ export const createTranslateLoader = (http: HttpClient) => {
     imports: [
         CommonModule,
         BrowserModule,
+        NgxBarcodeModule,
         BrowserAnimationsModule,
         HttpClientModule,
         MaterialModule,
