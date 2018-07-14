@@ -6,9 +6,10 @@ import { ChartsRoutingModule } from './charts-routing.module';
 import { ChartsComponent } from './charts.component';
 import { PageHeaderModule } from '../../shared';
 import { StatModule } from '../../shared';
-
+import {MaterialModule} from '../../shared/material.module';
+import { ZonedetailsComponent } from './zonedetails/zone.component'
 @NgModule({
-    imports: [CommonModule, Ng2Charts, ChartsRoutingModule, PageHeaderModule, StatModule],
-    declarations: [ChartsComponent]
+    imports: [CommonModule, Ng2Charts, ChartsRoutingModule, PageHeaderModule, StatModule, MaterialModule],
+    declarations: [ChartsComponent, ZonedetailsComponent]
 })
 export class ChartsModule {}
