@@ -16,6 +16,7 @@ const routes: Routes = [
             { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },
             { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
             { path: 'manageasset', loadChildren: './manageasset/manageasset.module#ManageassetModule' },
+           // { path: 'zonedetails', loadChildren: '/charts/' },
             { path: 'forms', loadChildren: './form/form.module#FormModule' },
             { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },
             { path: 'grid', loadChildren: './grid/grid.module#GridModule' },
