@@ -142,9 +142,9 @@ export class InventoryComponent implements OnInit {/*
        console.log('Row clicked: ', row);
      }
 
-     onPageableChange(val) {
+/*     onPageableChange(val) {
        console.log(val);
-     }
+     }*/
 
      constructor() {
 
@@ -186,9 +186,11 @@ export class InventoryComponent implements OnInit {/*
        this.dataSource.data = this.dataSourceArray2();
        this.table.renderRows();
      }
+/*
 
     constructor() { }
     ngOnInit() { }
+*/
 
 
 }

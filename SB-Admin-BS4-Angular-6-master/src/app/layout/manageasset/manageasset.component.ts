@@ -6,7 +6,7 @@ import { routerTransition } from '../../router.animations';
 export interface Icommon {
 value: string;
 viewValue: string;
-} 
+}
 
 @Component({
     selector: 'app-charts',
@@ -16,7 +16,7 @@ viewValue: string;
 })
 
 
-export class ManageassetComponent implements OnInit, OnChanges {
+export class ManageassetComponent implements OnInit {
     // bar chart
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -41,7 +41,7 @@ assemblyLines:Icommon[] = [
 {value: 'Line1', viewValue: 'Line 1'},
 {value: 'Line2', viewValue: 'Line 2'},
 {value: 'Line3', viewValue: 'Line 3'}
-]; 
+];
 
 zones: Icommon[] = [
     {value: 'Zone1', viewValue: 'Zone 1'},
@@ -58,7 +58,7 @@ assets: Icommon[] = [
 {value: 'Sling', viewValue: 'Sling'},
 ];
 
-   
+
 
     constructor() {}
 
@@ -70,21 +70,21 @@ assets: Icommon[] = [
         } else {
  this.barCodeValue = null;
         }
-          
-                
+
+
     }*/
 
     textChanged(val) {
 if(val != "")
 {
-    console.log("abc"  + val); 
+    console.log("abc"  + val);
 this.barcodeVal = val;
 }
 else
 {
 this.barcodeVal="";
 //this.barcodeVal=this.ddlPrintForValue }
-} 
+}
 }
 
 }

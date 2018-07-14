@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { routerTransition } from '../../router.animations';
+import { routerTransition } from '../../../router.animations';
 import {MatPaginator, MatSort, MatTable, MatTableDataSource} from '@angular/material';
 import {SelectionModel } from '@angular/cdk/collections';
 
@@ -93,9 +93,9 @@ export class ZonedetailsComponent implements OnInit {
        this.dataSource.data = this.dataSourceArray2();
        this.table.renderRows();
      }
-
+/*
     constructor() { }
-    ngOnInit() { }
+    ngOnInit() { }*/
 
 }
 function createNewAsset(assetData): AssetData {
